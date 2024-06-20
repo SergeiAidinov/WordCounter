@@ -30,20 +30,24 @@ public class WorkFlow {
         }
         while (!phaser.isTerminated()) {}
         SortedMap<Integer, List<String>> result = calculateWords(totalWordsAndQuantity);
-        Optional<Integer> keyOptional = result.keySet().stream().skip(result.size() - Main.QUANTITY_MAX_OFTEN_WORDS).findAny();
+        Optional<Integer> keyOptional = result.keySet().stream().skip(calculateOffset(result)).findAny();
         return keyOptional.isEmpty() ? result : result.tailMap(keyOptional.get());
     }
 
-    private SortedMap<Integer, List<String>> calculateWords(Map<String, Integer> wordsAndQuantity) {
+    private long calculateOffset(final SortedMap<Integer, List<String>> result) {
+        return ((result.size() - Main.QUANTITY_MAX_OFTEN_WORDS) > 0) ? (result.size() - Main.QUANTITY_MAX_OFTEN_WORDS) : 0;
+    }
+
+    private SortedMap<Integer, List<String>> calculateWords(final Map<String, Integer> wordsAndQuantity) {
         SortedMap<Integer, List<String>> quantityAndWords = new TreeMap<>();
         for (Map.Entry<String, Integer> entry : wordsAndQuantity.entrySet()) {
             quantityAndWords.computeIfPresent(Integer.valueOf(entry.getValue()), (key, val) -> {
-                List<String> list = quantityAndWords.get(key);
+                final List<String> list = quantityAndWords.get(key);
                 list.add(entry.getKey());
                 return list;
             });
             quantityAndWords.computeIfAbsent(Integer.valueOf(entry.getValue()), integer -> {
-                List<String> list = new ArrayList<>();
+                final List<String> list = new ArrayList<>();
                 list.add(entry.getKey());
                 return list;
             });

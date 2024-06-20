@@ -15,7 +15,7 @@ public class Counter implements Runnable {
     private final ConcurrentHashMap<String, Integer> totalWordsAndQuantity;
     private final Phaser phaser;
 
-    public Counter(Phaser phaser, ConcurrentHashMap<String, Integer> totalWordsAndQuantity, File workingFile) {
+    public Counter(final Phaser phaser, final ConcurrentHashMap<String, Integer> totalWordsAndQuantity, final File workingFile) {
         this.totalWordsAndQuantity = totalWordsAndQuantity;
         this.workingFile = workingFile;
         this.phaser = phaser;

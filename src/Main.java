@@ -5,9 +5,9 @@ public class Main {
     public static final int QUANTITY_MAX_OFTEN_WORDS = 10;
 
     public static void main(String[] args) {
-        System.out.println("Hello and welcome!");
+        System.out.println("Counting words...");
         long start = System.currentTimeMillis();
         System.out.println(WorkFlow.instance().countWords());
-        System.out.println("IN: " + (System.currentTimeMillis() - start) + "ms.");
+        System.out.println("IN: " + (System.currentTimeMillis() - start) + " ms.");
     }
 }
