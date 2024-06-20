@@ -19,7 +19,7 @@ public class WorkFlow {
         return workFlowInstance;
     }
 
-    public void countWords() {
+    public SortedMap<Integer, List<String>> countWords() {
         File file = new File(directory);
         for (String fileName : file.list()) {
             File workingFile = new File(directory + File.separator + fileName);
@@ -29,9 +29,9 @@ public class WorkFlow {
             }
         }
         while (!phaser.isTerminated()) {}
-        SortedMap<Integer, List<String>> res = calculateWords(totalWordsAndQuantity);
-        System.out.println("RESULT: " + res);
-        //System.out.println(resultMap);
+        SortedMap<Integer, List<String>> result = calculateWords(totalWordsAndQuantity);
+        Optional<Integer> keyOptional = result.keySet().stream().skip(result.size() - Main.QUANTITY_MAX_OFTEN_WORDS).findAny();
+        return keyOptional.isEmpty() ? result : result.tailMap(keyOptional.get());
     }
 
     private SortedMap<Integer, List<String>> calculateWords(Map<String, Integer> wordsAndQuantity) {
