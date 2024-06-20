@@ -25,7 +25,7 @@ public class WorkFlow {
             File workingFile = new File(directory + File.separator + fileName);
             if (workingFile.isFile()) {
                 phaser.register();
-                new Counter(phaser, totalWordsAndQuantity, workingFile).run();
+                new Thread (new Counter(phaser, totalWordsAndQuantity, workingFile)).start();
             }
         }
         while (!phaser.isTerminated()) {}

@@ -24,18 +24,19 @@ public class Counter implements Runnable {
 
     @Override
     public void run() {
-        phaser.arrive();
         procedure();
         phaser.arriveAndDeregister();
     }
 
     private void procedure() {
+        System.out.println(Thread.currentThread() + " started at " + System.currentTimeMillis());
         final List<String> wordList = getWordList();
         Map<String, Integer> wordsAndQuantity = new HashMap<>();
         wordList.stream().forEach(word -> wordsAndQuantity.put(word, Collections.frequency(wordList, word)));
         for (Map.Entry<String, Integer> entry : wordsAndQuantity.entrySet()){
             totalWordsAndQuantity.merge(entry.getKey(), entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
         }
+        System.out.println(Thread.currentThread() + " finished at " + System.currentTimeMillis());
     }
 
     private List<String> getWordList() {
