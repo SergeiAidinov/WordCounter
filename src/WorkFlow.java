@@ -22,15 +22,15 @@ public class WorkFlow {
     public SortedMap<Integer, List<String>> countWords() {
         File file = new File(directory);
         for (String fileName : file.list()) {
-            File workingFile = new File(directory + File.separator + fileName);
+            final File workingFile = new File(directory + File.separator + fileName);
             if (workingFile.isFile()) {
                 phaser.register();
                 new Thread (new Counter(phaser, totalWordsAndQuantity, workingFile)).start();
             }
         }
         while (!phaser.isTerminated()) {}
-        SortedMap<Integer, List<String>> result = calculateWords();
-        Optional<Integer> keyOptional = result.keySet().stream().skip(calculateOffset(result)).findAny();
+        final SortedMap<Integer, List<String>> result = calculateWords();
+        final Optional<Integer> keyOptional = result.keySet().stream().skip(calculateOffset(result)).findAny();
         return keyOptional.isPresent() ? result.tailMap(keyOptional.get()) : result;
     }
 

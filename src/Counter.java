@@ -31,7 +31,7 @@ public class Counter implements Runnable {
     private void procedure() {
         System.out.println(Thread.currentThread() + " started at " + System.currentTimeMillis());
         final List<String> wordList = getWordList();
-        Map<String, Integer> wordsAndQuantity = new HashMap<>();
+        final Map<String, Integer> wordsAndQuantity = new HashMap<>();
         wordList.stream().forEach(word -> wordsAndQuantity.put(word, Collections.frequency(wordList, word)));
         for (Map.Entry<String, Integer> entry : wordsAndQuantity.entrySet()){
             totalWordsAndQuantity.merge(entry.getKey(), entry.getValue(), (oldValue, newValue) -> oldValue + newValue);
@@ -41,7 +41,7 @@ public class Counter implements Runnable {
 
     private List<String> getWordList() {
         InputStream inputStream = null;
-        byte[] bytes;
+        final byte[] bytes;
         try {
             inputStream = new FileInputStream(workingFile);
             bytes = inputStream.readAllBytes();
