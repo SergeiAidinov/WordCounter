@@ -71,9 +71,9 @@ public class Counter implements Runnable {
     }
 
     private boolean doesMatchRegexp(final char symbol) {
-        final String word = String.valueOf(symbol);
-        if (word.isEmpty() || word.isBlank()) return false;
-        Matcher matcher = pattern.matcher(word);
+        final String letter = String.valueOf(symbol);
+        if (letter.isEmpty() || letter.isBlank()) return false;
+        final Matcher matcher = pattern.matcher(letter);
         return matcher.find();
     }
 }
