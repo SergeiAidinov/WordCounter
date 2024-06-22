@@ -32,6 +32,7 @@ public class WorkFlow {
         final SortedMap<Integer, List<String>> result = calculateWords();
         final Optional<Integer> keyOptional = result.keySet().stream().skip(calculateOffset(result)).findAny();
         return keyOptional.isPresent() ? result.tailMap(keyOptional.get()) : result;
+
     }
 
     private long calculateOffset(final SortedMap<Integer, List<String>> result) {
