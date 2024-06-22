@@ -31,7 +31,7 @@ public class WorkFlow {
         while (!phaser.isTerminated()) {}
         SortedMap<Integer, List<String>> result = calculateWords();
         Optional<Integer> keyOptional = result.keySet().stream().skip(calculateOffset(result)).findAny();
-        return result.tailMap(keyOptional.get());
+        return keyOptional.isPresent() ? result.tailMap(keyOptional.get()) : result;
     }
 
     private long calculateOffset(final SortedMap<Integer, List<String>> result) {
